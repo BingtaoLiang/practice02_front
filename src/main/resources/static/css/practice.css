@@ -1,0 +1,16 @@
+.container-fluid {
+    text-align: center;
+}
+.menu .school-icon{
+    font-size: 40px;
+    text-align:center;
+    vertical-align:middle;
+}
+.table-bordered{
+    table-layout: fixed;
+    text-align: center;
+    vertical-align:middle;
+    border-collapse: collapse;
+    width: 100%;
+    height: 200px;
+}

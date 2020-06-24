@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+        .title {
+            margin-top: 10px;
+            /*margin-left: 280px;*/
+            text-align: center;
+        }
+
+
+        .container input{
+            width: 490px;
+            height: 40px;
+
+        }
+
+        .container-fluid img{
+            /*position: relative;*/
+            margin-top: 0px;
+            left: 560px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .error{
+            color: red;
+        }
+        .td_left{
+            width: 100px;
+            text-align: right;
+            height: 65px;
+        }
+        .td_right{
+            padding-left: 40px;
+        }
+        #username,#password,#password2,#userphone{
+            width:360px;
+            height: 40px;
+            border: 1px solid #A6A6A6;
+            border-radius: 5px;
+            padding-left: 15px;
+        }
+        #btn_sub{
+            width: 150px;
+            height: 40px;
+        }
+        #td_sub{
+            padding-left: 230px;
+        }
+    </style>
+    <script>
+
+        /*
+            分析：
+            1.给表单绑定Onsubmit事件，当返回true时可以提交，否则不能提交。监听器中判断每一个方法校验的结果
+            如果都为true，则监听器方法返回true，如果有一个为false，监听器方法返回false
+            2.定义一些方法分别校验各个表单项
+            3.给各个表单绑定onblur事件。
+        */
+
+
+        window.onload=function () {
+            //1.给表单绑定Onsubmit事件
+            document.getElementById("form").onsubmit=function () {
+                //调用用户名校验方法   checkUsername()
+                // 调用密码校验方法    checkPassword()
+                // return checkUsername()&&checkPassword();
+
+                return checkUsername() && checkPassword() && checkPassword2() &&checkUserPhone();
+            }
+
+            //给用户名和密码输入框分别绑定离开焦点事件
+            document.getElementById("username").onblur=checkUsername;
+            document.getElementById("password").onblur=checkPassword;
+            document.getElementById("password2").onblur=checkPassword2;
+            document.getElementById("userphone").onblur=checkUserPhone;
+
+        }
+
+        //校验用户名
+        function checkUsername() {
+            //1.获取用户名的值
+            var username = document.getElementById("username").value;
+
+            //2.定义正则表达式
+            // [a-zA-Z0-9_\u4e00-\u9fa5]
+            var reg_username=/^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9_\u4e00-\u9fa5]{5,11}$/;
+            // var reg_username=/^\w{6,12}$/;
+            //3.判断值是否符合正则的规则
+            let flag = reg_username.test(username);
+            //4.提示信息
+            let s_username = document.getElementById("s_username");
+            if(flag){
+                //提示绿色对勾
+                // s_username.innerHTML="<img src='images/check.jpg' alt='没有图片' width='50' height='40'/>"
+                s_username.innerHTML="<img src='images/check.jpg' alt='没有图片' width='50' height='40'/>"
+            }else{
+                //提示用户名有误
+                s_username.innerHTML="用户名格式有误"
+            }
+            return flag;
+
+        }
+
+        //校验密码
+        function checkPassword() {
+            //1.获取用户名的值
+            var password = document.getElementById("password").value;
+
+            //2.定义正则表达式
+            var reg_password=/^[a-zA-Z0-9][a-zA-Z0-9~!@#$%^&*_]{5,11}$/;
+            //3.判断值是否符合正则的规则
+            let flag = reg_password.test(password);
+            //4.提示信息
+            let s_password = document.getElementById("s_password");
+            if(flag){
+                //提示绿色对勾
+                s_password.innerHTML="<img src='images/check.jpg' alt='没有图片' width='50' height='40'>"
+            }else{
+                //提示密码有误
+                s_password.innerHTML="密码格式有误"
+            }
+            return flag;
+
+        }
+
+        //校验确认密码
+        function checkPassword2() {
+            //1.获取用户名的值
+            var password2 = document.getElementById("password2").value;
+
+            //2.定义正则表达式
+            var reg_password2=/^[a-zA-Z0-9][a-zA-Z0-9~!@#$%^&*_]{5,11}$/;
+            //3.判断值是否符合正则的规则
+            let flag = reg_password2.test(password2);
+            //4.提示信息
+            let s_password2 = document.getElementById("s_password2");
+            if(flag){
+                //提示绿色对勾
+                s_password2.innerHTML="<img src='images/check.jpg' alt='没有图片' width='50' height='40'>"
+            }else{
+                //提示密码有误
+                s_password2.innerHTML="密码格式有误"
+            }
+            return flag;
+
+        }
+
+        //校验电话
+        function checkUserPhone() {
+            //1.获取用户名的值
+            var userphone = document.getElementById("userphone").value;
+
+            //2.定义正则表达式
+            var reg_userphone=/^1[1234567890]\d{9}$/;
+            //3.判断值是否符合正则的规则
+            let flag = reg_userphone.test(userphone);
+            //4.提示信息
+            let s_userphone = document.getElementById("s_userphone");
+            if(flag){
+                //提示绿色对勾
+                s_userphone.innerHTML="<img src='images/check.jpg' alt='没有图片' width='50' height='40'>"
+            }else{
+                //提示密码有误
+                s_userphone.innerHTML="密码格式有误"
+            }
+            return flag;
+
+        }
+    </script>
+</head>
+<body>
+<div th:insert="navigation :: nav"></div>
+
+<div>
+    <form action="/addregister" method="post" id="form">
+        <table style="margin: 10px 320px" class="col-lg-8 col-md-8 col-sm-10 col-xs-10 ">
+            <tr>
+                <td class="td_left"><label for="username">用户名:</label></td>
+                <td class="td_right"><input type="text" id="username" name="username" placeholder="请输入用户名...字母开头，6—12位">
+                    <span id="s_username" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_left"><label for="password">密码:</label></td>
+                <td class="td_right"><input type="password" id="password" name="password" placeholder="请输入密码...字母开头，6—12位">
+                    <span id="s_password" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_left"><label for="password2">确认密码:</label></td>
+                <td class="td_right"><input type="password" id="password2" name="password2" placeholder="确认密码...字母开头，6—12位">
+                    <span id="s_password2" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_left"><label for="userphone">手机号:</label></td>
+                <td class="td_right"><input type="text" id="userphone" name="userPhone" placeholder="请输入手机号...">
+                    <span id="s_userphone" class="error"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" id="td_sub"><input type="submit" id="btn_sub" class="btn btn-primary" value="注册"></td>
+            </tr>
+        </table>
+    </form>
+    <h4 th:text="${msg}"></h4>
+
+</div>
+</body>
+</html>

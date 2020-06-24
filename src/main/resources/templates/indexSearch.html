@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找大学/查专业</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+
+        body{
+            background-color: whitesmoke;
+        }
+
+        .dropdown active{
+            background-color: #b0b0b0;
+        }
+
+        .bq a{
+            margin-left: 40px;
+        }
+
+        input[type="checkbox"] {
+
+            display: none;
+        }
+
+        input[type="checkbox"] + span {
+            display: inline-block;
+            width: 60px;
+            height: 27px;
+            font-size: 15px;
+            /*line-height: 50px;*/
+            text-align: center;
+            border: 1px solid #cccccc;
+            background-color: #fff;
+            margin-left: -5px;
+            padding-top: 4px;
+            /*margin: 24px 0px;*/
+            /*border-radius: 25px;*/
+        }
+
+        input[type="checkbox"]:checked + span {
+            /*border: 1px solid #090;*/
+            background-color: #cacacd;
+        }
+
+        .schooltitle span{
+            /*margin-left: 0px;*/
+            margin-right: 5px;
+        }
+
+
+        .schooltitle {
+            padding: 0px 0px;
+            list-style: none;
+            border-radius: 4px
+        }
+        .schooltitle > li {
+            display: inline-block
+        }
+
+        .schooltitle > li + li:before {
+            padding: 0 5px;
+            color: #ccc;
+            content: "/\00a0"
+        }
+        .schooltitle > .active {
+            color: #777
+        }
+        .cadrborder div{
+            padding-top: 5px;
+        }
+
+        form button{
+            width: 100%;
+            margin-top: 10px
+        }
+
+
+    </style>
+</head>
+<body>
+<div th:insert="navigation :: nav"></div>
+
+<div class="container" style="width: 100%;background-color: whitesmoke">
+
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2" style="margin-top: 20px">
+
+        <form name="schoolAndProSearch" method="post" >
+            <input id="indexSearchInput" class="sr" type="text" th:value="${searchInput}" name="indexSearchInput"
+                   style="float: left;border-radius: 0px;width:600px;height: 40px;padding-left:10px;margin-left: 50px"
+                   placeholder="输入关键词...">
+
+            <div >
+                <input class="btn" type="button" onclick="searchSchool()"
+                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="找学校">
+            </div>
+            <div >
+                <input class="btn" type="button" onclick="searchProfession()"
+                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="查专业">
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2"th:if="${schools}!= null" style="margin-top:30px;margin-bottom: 20px">
+        <!--找大学-->
+        <div class="schoolList" >
+            <div class="container-fluid">
+                <ul style="margin-bottom: 22px;padding-left: 0" th:each="school:${schools}">
+                    <div class="media">
+                        <a class="pull-left" href="#">
+                            <img class="media-object"
+                                 src="http://img1.youzy.cn/content/media/thumbs/p00189371.jpeg"
+                                 style="width: 60px;height: 60px">
+                        </a>
+                        <div class="media-body">
+                            <a th:href="@{'/school_desc_l/'+${school.scid}}">
+                                <h3 class="media-heading" th:text="${school.name}"></h3>
+                            </a>
+
+                        </div>
+                        <ol class="schooltitle">
+                            <li class="active" th:text="${school.type}"></li>
+                            <li class="active" th:text="${school.department}"></li>
+                            <li class="active" th:text="${school.areaname}"></li>
+                            <li class="active" style="color: #3889d4">热度：</li>
+                        </ol>
+                        <ol class="schooltitle">
+                                         <span class="label label-primary" style="margin-left: 0px"
+                                               th:if="${school.is985 == 985}">985</span>
+                            <span class="label label-primary" th:if="${school.is211 == 211}">211</span>
+                            <span class="label label-primary"
+                                  th:if="${school.isDoubleFirstClass == 1}">双一流</span>
+                        </ol>
+                    </div>
+                    <hr>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-8 col-md-8 col-sm-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-1"
+         style="margin-bottom: 30px;margin-top: 20px" th:if="${professionDTO}!= null">
+
+        <!--    查专业    -->
+        <div class="panel panel-default" th:each="profession:${professionDTO.professions}"
+             style="width: 87%;margin-left: 47px;margin-top: 30px;border-color: white"
+             >
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="font-size: 24px;height: 60px" th:text="${profession.proname}"></div>
+            <div class="panel-body">
+                <p style=" font-size: 18px;margin-left: 10px" th:text="${profession.description}"></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function searchSchool() {
+        document.schoolAndProSearch.action = "/indexSearch/school";
+        document.schoolAndProSearch.submit();
+    }
+
+    function searchProfession() {
+        document.schoolAndProSearch.action = "/indexSearch/profession";
+        document.schoolAndProSearch.submit();
+    }
+</script>
+</body>
+</html>

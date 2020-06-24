@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找大学</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+
+        .dropdown active{
+            background-color: #b0b0b0;
+        }
+
+
+        .bq{
+            margin-left: 60px;
+        }
+
+        .bq a{
+            margin-left: 40px;
+        }
+        .dq{
+            margin-left: 40px;
+            margin-top: 30px;
+
+        }
+        input[type="checkbox"] {
+
+            display: none;
+        }
+
+        input[type="checkbox"] + span {
+            display: inline-block;
+            width: 60px;
+            height: 27px;
+            font-size: 15px;
+            /*line-height: 50px;*/
+            text-align: center;
+            border: 1px solid #cccccc;
+            background-color: #fff;
+            margin-left: -5px;
+            padding-top: 4px;
+            /*margin: 24px 0px;*/
+            /*border-radius: 25px;*/
+        }
+
+        input[type="checkbox"]:checked + span {
+            /*border: 1px solid #090;*/
+            background-color: #cacacd;
+        }
+
+        .schooltitle span{
+            /*margin-left: 0px;*/
+            margin-right: 5px;
+        }
+        .cadrborder{
+            margin-top: 20px;
+            border: 1px solid #b1afaf;
+            -webkit-border-radius: 10px;
+        }
+
+        .schooltitle {
+            padding: 0px 0px;
+            list-style: none;
+            border-radius: 4px
+        }
+        .schooltitle > li {
+            display: inline-block
+        }
+
+        .schooltitle > li + li:before {
+            padding: 0 5px;
+            color: #ccc;
+            content: "/\00a0"
+        }
+        .schooltitle > .active {
+            color: #777
+        }
+        .cadrborder div{
+            padding-top: 5px;
+        }
+
+        form button{
+            width: 100%;
+            margin-top: 10px
+        }
+
+    </style>
+</head>
+<body>
+<div th:insert="navigation :: nav"></div>
+
+<div class="container" style="width: 100%;background-color: whitesmoke;">
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="col-lg-9 " style="margin-bottom: 30px">
+            <div class="ss" style="margin: 30px 0px">
+                <form action="/schoolsearch">
+                    <input  class="sr" name="schoolname" type="text" style="float: left;border-radius: 0px;width:600px;height: 40px;margin-left: 20px;padding-left: 10px" placeholder="输入院校名称...">
+                    <input  class="btn" type="submit" style="float: left;border-radius: 0px;height: 40px;width: 70px;margin-left: 5px" value="搜索">
+                </form>
+                <br>
+                <br>
+
+            </div>
+
+            <div class="schoolList">
+                <div class="container-fluid">
+                    <ul style="margin-bottom: 22px;padding-left: 0"  th:each="school:${schools.schools}">
+                        <div class="media">
+                            <a class="pull-left" th:href="@{'/school_desc_l/'+${school.scid}}">
+                                <img class="media-object"
+                                     src="http://img1.youzy.cn/content/media/thumbs/p00189371.jpeg"
+                                     style="width: 60px;height: 60px">
+                            </a>
+
+                            <div class="media-body" >
+                                <a th:href="@{'/school_desc_l/'+${school.scid}}">
+                                    <h3 class="media-heading" th:text="${school.name}"></h3>
+                                </a>
+                            </div>
+                            <ol class="schooltitle">
+                                <li class="active" th:text="${school.type}"></li>
+                                <li class="active" th:text="${school.department}"></li>
+                                <li class="active" th:text="${school.areaname}"></li>
+                                <li class="active" style="color: #3889d4">热度：</li>
+                            </ol>
+                            <ol class="schooltitle">
+                                         <span class="label label-primary" style="margin-left: 0px"
+                                               th:if="${school.is985 == 985}">985</span>
+                                <span class="label label-primary" th:if="${school.is211 == 211}">211</span>
+                                <span class="label label-primary"
+                                      th:if="${school.isDoubleFirstClass == 1}">双一流</span>
+                            </ol>
+                        </div>
+                        <hr>
+                    </ul>
+                    <nav aria-label="Page navigation" >
+                        <ul class="pagination">
+                            <li th:if="${schools.showFirstPage}">
+                                <a th:href="@{/schoolList(page=1,reid=${reid})}"
+                                   aria-label="FirstPage">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a >
+                            </li>
+                            <li th:if="${schools.showPrevious}">
+                                <a th:href="@{/schoolList(page=${schools.page - 1},reid=${reid})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+
+
+                            <li th:each="page : ${schools.pages}" th:class="${schools.page == page}? 'active' : ''">
+                                <a th:href="@{/schoolList(page=${page},reid=${reid})}"
+                                   th:text="${page}"></a>
+                            </li>
+
+                            <li th:if="${schools.showNext}">
+                                <a th:href="@{/schoolList(page=${schools.page + 1},reid=${reid})}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li th:if="${schools.showEndPage}">
+                                <a th:href="@{/schoolList(page=${schools.totalPage},reid=${reid})}"
+                                   aria-label="EndPage">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

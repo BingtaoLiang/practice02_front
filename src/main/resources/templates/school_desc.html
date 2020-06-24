@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>院校介绍</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        html{
+            background-color: whitesmoke;
+        }
+        body #school {
+            /*background-color: whitesmoke;*/
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 30px;
+            text-align: center;
+            /*padding-bottom: 35px;*/
+        }
+
+        h1, h2 {
+            margin-top: 10px;
+            font-size: 38px;
+            font-weight: 100;
+            color: #555;
+            line-height: 50px;
+        }
+
+        h3 {
+            font-size: 22px;
+            font-weight: 300;
+            color: #555;
+            line-height: 30px;
+        }
+
+        .title {
+            margin-top: 10px;
+            /*margin-left: 280px;*/
+            text-align: center;
+        }
+
+        .dropdown active {
+            background-color: #b0b0b0;
+        }
+
+
+        .ss {
+            height: 80px;
+
+        }
+
+        .cx {
+            width: 90%;
+            height: 100%;
+            float: left;
+
+        }
+
+        .cx img {
+            width: 100%;
+            margin-left: 35px;
+        }
+
+        .sr {
+            float: left;
+            width: 820px;
+            height: 30px;
+            margin-top: 3px;
+            margin-left: 30px;
+            border-radius: 0px;
+        }
+
+
+        .zd a {
+            width: 50px;
+            height: 50px;
+            background-color: #42495d;
+            color: #b0b0b0;
+            font-size: 15px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div th:insert="navigation :: nav"></div>
+
+
+<div id="school" class="container-fluid col-lg-10 col-md-10 col-sm-10 col-lg-offset-1" style=" margin-top: 35px">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2 th:text="${school.name}"></h2>
+            <h4 th:text="${school.acronym}"></h4>
+            <p class="row">
+            <h5 th:text="'所在地区：'+${school.areaname}+'&nbsp;'+'&nbsp;'+'&nbsp;'+'&nbsp;'+'类型：'+${school.type}+'&nbsp;'+'&nbsp;'+'&nbsp;'+'&nbsp;'+'隶属：'+${school.department}"></h5>
+            <h5 th:if="${school.is985 != 0}">985</h5>
+            <h5 th:if="${school.is211 != 0}">211</h5>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid col-lg-10 col-md-10 col-sm-10  col-lg-offset-1" style="margin-top: 35px">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">学校简介</h3>
+        </div>
+        <div class="panel-body">
+            <h4 th:text="${school.description}" style="color: #888888"></h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1" style="margin-top: 35px">
+    <div class="panel panel-default">
+        <div class="panel-heading" th:if="${school.professions} !=null">
+            <h3 class="panel-title">开设专业</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table" id="tab">
+
+                <tr>
+                    <th>学校</th>
+                    <th>专业名称</th>
+                </tr>
+
+                <tbody>
+                <tr th:each="profession:${school.professions}">
+                    <td th:text="${profession.gaokao.name}"></td>
+                    <td th:text="${profession.proname}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

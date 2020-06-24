@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>导航栏</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
+</head>
+<body style="background-color: whitesmoke">
+<div th:fragment="nav">
+    <div >
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">志愿填报专家<span class="sr-only"></span></a></li>
+                        <li class="dropdown">
+                            <a href="/xingaokao" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">新高考<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/school2profession">根据大学选专业</a></li>
+
+                                <li><a href="/profession2school">根据专业选科目</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">智能填报<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/majors/Homepage" style="color: #333333;text-align: center">查专业</a></li>
+                                <li><a href="/schoolHomepage" style="color: #333333;text-align: center">找大学</a></li>
+                                <li><a href="/weici" style="color: #333333;text-align: center">位次查询</a></li>
+                                <li><a href="/fenshuxian" style="color: #333333;text-align: center">分数线</a></li>
+                                <li><a href="/picixian" style="color: #333333;text-align: center">批次线</a></li>
+                            </ul>
+                        </li>
+                        <li th:if="${session.user != null}" class="dropdown">
+                            <a href="#" class="dropdown-toggle text-position" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                <span th:text="${session.user.userName}"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/logout">退出登录</a></li>
+                            </ul>
+                        </li>
+
+                        <li th:if="${session.user == null}" style="margin-top: 15px;margin-left: 15px">
+                        <span>
+                         <a href="/register" style="color: #777" >注册 |</a>
+                         <a href="/denglu" style="color: #777" > 登录</a>
+                        </span>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" action="/indexSearch" style="position: absolute;right: 150px">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="indexSearhInput" placeholder="找大学/查专业">
+                        </div>
+                        <button type="submit" class="btn btn-default" style=" width: auto;margin-top: auto;">搜索</button>
+
+                    </form>
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+    </div>
+</div>
+
+</body>
+</html>

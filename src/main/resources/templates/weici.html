@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>位次查询</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/gaokao.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+
+<div th:insert="navigation :: nav"></div>
+
+<div class="container" style="background-color: #FFFFFF;width: 1260px; height: 890px;">
+
+    <div class="col-lg-12">
+        <p class="col-lg-2" style="font-size: 26px;margin: 45px 0px">我的位次</p>
+        <span class="col-lg-1" style="font-size: 14px;margin: 94px -70px" th:if="${score}!= null" th:text="${sort}==1 ? '理科 '+${score}:'文科 '+${score}"></span>
+        <span class="col-lg-1" style="font-size: 14px;margin: 94px 0px" th:if="${score}!= null" th:text="'位次： '+ ${rankLow}"></span>
+    </div>
+
+    <div class="row" style="margin-top: -70px">
+        <form action="/rankSearch" method="get" class="form-inline col-lg-12">
+            <div class="row">
+                <p style="float: left;font-size: 18px;margin-left: 30px" class="col-lg-2">科类选择:</p>
+                <div  style="float:left;margin-left:-90px;">
+                    <label class="radio-inline">
+                        <input type="radio" name="sort" id="inlineRadio1" value="1"> 理科
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sort" id="inlineRadio2" value="2"> 文科
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <!--               <div  class="col-lg-10" style="float:left;margin-left:-90px;">-->
+                <div>
+                    <p style="float: left;font-size: 18px;margin-left: 30px" class="col-lg-2">预估总分:</p>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="score" id="exampleInputAmount" placeholder="请输入您的成绩...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">查找</button>
+                    </div>
+                    <!--                   <button type="submit" class="btn btn-primary">查找</button>-->
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="col-lg-12" style="float: left;font-size: 18px;margin-left: 30px;margin-top: 16px">
+        <span style="font-size: 18px">位次区间：<span th:text="${rankLow}"></span>-<span
+                th:text="${rankHigh}"></span></span>
+        <b style="font-size: 18px">建议位次：<span th:text="${rankLow}"></span></b>
+    </div>
+
+
+    <div class="col-lg-10">
+        <h6 class="pt10" style="margin-left: 5px;font-size: 14px;font-weight: bold ">重要提示：</h6>
+        <p style="font-size: 11px"> 1、位次查询结果根据2019年教育考试院发布录取位次计算；</p>
+        <p  style="font-size: 11px">2、在正式填报时，以教育考试院公布的高考成绩（位次）为准。</p>
+    </div>
+
+</div>
+</body>
+</html>

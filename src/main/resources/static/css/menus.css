@@ -1,0 +1,45 @@
+.a{
+    width: 200px;
+    float: left;
+}
+.b{
+    width: 200px;
+    height: 50px;
+    /*background-color: ;*/
+    text-align: center;
+    line-height: 50px;
+    color: darkslategrey;
+
+}
+.c{
+
+    width:200px;
+    height: 100px;
+    /*background-color: gainsboro;*/
+    display: none;
+    /*text-align: center;*/
+    /*visibility: hidden;*/
+}
+/*.new ul{*/
+/*    list-style: none;*/
+/*    !*margin-left: -20px;*!*/
+/*}*/
+.new ul li{
+    text-align: center;
+    line-height:20px;
+    display: block;
+    width:180px;
+}
+.a:hover{
+    cursor: pointer;
+}
+.a:hover .c{
+    display: block;
+}
+.a:hover .b{
+    background-color: green;
+}
+li:hover{
+    background-color: gray;
+    color: #FFFFFF;
+}
