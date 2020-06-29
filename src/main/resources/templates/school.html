@@ -18,18 +18,19 @@
         }
 
 
-        .bq{
-            margin-left: 60px;
+        .sub_btn{
+            float: left;
+            border-radius: 5px;
+            height: 40px;
+            width: 70px;
+            margin-left: 5px;
+            background-color: #cccccc;
         }
 
         .bq a{
             margin-left: 40px;
         }
-        .dq{
-            margin-left: 40px;
-            margin-top: 30px;
 
-        }
         input[type="checkbox"] {
 
             display: none;
@@ -100,13 +101,15 @@
 
     <div class="col-lg-10 col-lg-offset-1">
         <div class="col-lg-9 " style="margin-bottom: 30px">
-            <div class="ss" style="margin: 30px 0px">
-                <form action="/schoolsearch">
-                    <input  class="sr" name="schoolname" type="text" style="float: left;border-radius: 0px;width:600px;height: 40px;margin-left: 20px;padding-left: 10px" placeholder="输入院校名称...">
-                    <input  class="btn" type="submit" style="float: left;border-radius: 0px;height: 40px;width: 70px;margin-left: 5px" value="搜索">
-                </form>
-                <br>
-                <br>
+            <div class="ss" style="margin-top: 30px">
+                <div class="container">
+                    <form action="/schoolsearch" class="row">
+                        <input  class="sr col-lg-10 col-md-10 col-sm-10 col-xs-6" name="schoolname" type="text" style="float: left;border-radius: 0px;height: 40px;margin-left: 20px;padding-left: 10px" placeholder="输入院校名称...">
+                        <input  class="btn sub_btn col-lg-1 col-md-1 col-sm-1 col-xs-1" type="submit" value="搜索">
+                    </form>
+                    <br>
+                    <br>
+                </div>
 
             </div>
 

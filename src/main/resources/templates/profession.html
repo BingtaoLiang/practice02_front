@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查专业</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/gaokao.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+
+
+        .dropdown active{
+            background-color: #b0b0b0;
+        }
+
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            background-color: #ddd;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .down{
+            height: 440px;
+            width: 80%;
+            border: #b0b0b0 1px solid;
+            margin-left: 20px;
+            margin-top:25px;
+        }
+
+        .xueke{
+            float: left;
+            margin-left: 20px;
+            width: 145px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:insert="navigation :: nav"></div>
+
+<div class="container" style="width: 100%;background-color: whitesmoke">
+
+    <div class="col-lg-8  col-md-8 col-lg-offset-2 col-md-offset-2" style="margin-bottom: 60px;margin-top: 40px">
+
+       <div style="margin: 0 auto" >
+           <form action="/majors" style="display: flex;justify-content: center">
+               <input  class="sr" type="text" name="profession" style="float: left;border-radius: 0px;width:700px;height: 40px;margin-left: 50px;padding-left: 10px" placeholder="输入专业名称...">
+               <input  class="btn" type="submit" style="float: left;border-radius: 5px;height: 40px;margin-left: 10px;background-color: #cccccc" value="搜索">
+           </form>
+       </div>
+
+
+        <div class="container-fluid">
+            <div class="panel panel-default" style="margin-top: 20px;" >
+                <div class="panel-heading" style="margin-bottom: 10px">
+                    <h3 class="panel-title" th:text="${major}"></h3>
+                </div>
+                <div  >
+                    <div class="list-group" th:each="profession:${professions.professions}">
+                        <a th:href="@{'/profession_desc/'+${profession.proname}}" class="list-group-item"
+                           style="text-align: center" th:text="${profession.proname}"></a>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <nav aria-label="Page navigation" >
+                <ul class="pagination">
+                    <li th:if="${professions.showFirstPage}">
+                        <a th:href="@{/professionList(page=1,major=${major})}"
+                           aria-label="FirstPage">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a >
+                    </li>
+                    <li th:if="${professions.showPrevious}">
+                        <a th:href="@{/professionList(page=${professions.page - 1},major=${major})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+
+                    <li th:each="page : ${professions.pages}" th:class="${professions.page == page}? 'active' : ''">
+                        <a th:href="@{/professionList(page=${page},major=${major})}"
+                           th:text="${page}"></a>
+                    </li>
+
+                    <li th:if="${professions.showNext}">
+                        <a th:href="@{/professionList(page=${professions.page + 1},major=${major})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${professions.showEndPage}">
+                        <a th:href="@{/professionList(page=${professions.totalPage},major=${major})}"
+                           aria-label="EndPage">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

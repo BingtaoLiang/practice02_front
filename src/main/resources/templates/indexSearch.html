@@ -80,7 +80,13 @@
             margin-top: 10px
         }
 
-
+        .sub_btn{
+            float: left;
+            border-radius: 5px;
+            height: 40px;
+            margin-left: 5px;
+            background-color: #cccccc;
+        }
     </style>
 </head>
 <body>
@@ -90,21 +96,39 @@
 
     <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2" style="margin-top: 20px">
 
-        <form name="schoolAndProSearch" method="post" >
-            <input id="indexSearchInput" class="sr" type="text" th:value="${searchInput}" name="indexSearchInput"
-                   style="float: left;border-radius: 0px;width:600px;height: 40px;padding-left:10px;margin-left: 50px"
-                   placeholder="输入关键词...">
+        <div class="container">
+            <form name="schoolAndProSearch" method="post" class="row">
+                <input id="indexSearchInput" class="sr col-lg-8 col-md-8 col-sm-8 col-xs-6" type="text" th:value="${searchInput}" name="indexSearchInput"
+                       style="float: left;border-radius: 0px;height: 40px;padding-left:10px;margin-left: 50px"
+                       placeholder="输入关键词...">
 
-            <div >
-                <input class="btn" type="button" onclick="searchSchool()"
-                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="找学校">
-            </div>
-            <div >
-                <input class="btn" type="button" onclick="searchProfession()"
-                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="查专业">
-            </div>
-        </form>
+                <div >
+                    <input class="btn sub_btn col-lg-1 col-md-1 col-sm-1 col-xs-1" type="button" onclick="searchSchool()"
+                            value="找学校">
+                </div>
+                <div >
+                    <input class="btn sub_btn col-lg-1 col-md-1 col-sm-1 col-xs-1" type="button" onclick="searchProfession()"
+                            value="查专业">
+                </div>
+            </form>
+        </div>
 
+
+
+<!--        <form name="schoolAndProSearch" method="post" >-->
+<!--            <input id="indexSearchInput" class="sr" type="text" th:value="${searchInput}" name="indexSearchInput"-->
+<!--                   style="float: left;border-radius: 0px;width:600px;height: 40px;padding-left:10px;margin-left: 50px"-->
+<!--                   placeholder="输入关键词...">-->
+
+<!--            <div >-->
+<!--                <input class="btn" type="button" onclick="searchSchool()"-->
+<!--                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="找学校">-->
+<!--            </div>-->
+<!--            <div >-->
+<!--                <input class="btn" type="button" onclick="searchProfession()"-->
+<!--                       style="float: left;border-radius: 0px;height: 40px;margin-left: 10px" value="查专业">-->
+<!--            </div>-->
+<!--        </form>-->
     </div>
 
 

@@ -19,4 +19,15 @@ public class IndexController {
     public String weici(){
         return "weici";
     }
+
+    @GetMapping("/fenshuxian")
+    public String fenshuxian(){
+        return "fenshuxian";
+    }
+
+    @GetMapping("/picixian")
+    public String picixian(){
+        return "picixian";
+    }
+
 }

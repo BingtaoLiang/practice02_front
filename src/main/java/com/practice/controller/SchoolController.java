@@ -3,6 +3,7 @@ package com.practice.controller;
 import com.practice.dto.PaginationDTO;
 import com.practice.model.School;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-// @RequestMapping("/rest")
 public class SchoolController {
 
-  @Autowired private RestTemplate restTemplate;
+  @Autowired
+  private RestTemplate restTemplate;
+
+  @Value("${service.provider.url}")
+  private String url;
 
   @GetMapping("/")
   @ResponseBody
   public ModelAndView index() {
     ModelAndView mv = new ModelAndView("index");
-    mv.addObject("regions", restTemplate.getForObject("http://localhost:9090/area", List.class));
-    mv.addObject("majors", restTemplate.getForObject("http://localhost:9090/majorList", List.class));
+    mv.addObject("regions", restTemplate.getForObject(url+"/area", List.class));
+    mv.addObject("majors", restTemplate.getForObject(url+"/majorList", List.class));
     return mv;
   }
 
@@ -33,7 +37,7 @@ public class SchoolController {
                                  @RequestParam(value = "page",defaultValue = "1") Integer page) {
     ModelAndView mv = new ModelAndView("school");
     mv.addObject("reid",reid);
-    mv.addObject("schools",restTemplate.getForObject("http://localhost:9090/area2?reid="+reid+"&page="+page, PaginationDTO.class));
+    mv.addObject("schools",restTemplate.getForObject(url+"/area2?reid="+reid+"&page="+page, PaginationDTO.class));
     return mv;
   }
 
@@ -43,7 +47,7 @@ public class SchoolController {
   @RequestMapping("/school_desc_l/{scid}")
   public ModelAndView getSchoolInfo(@PathVariable("scid") Integer scid){
     ModelAndView mv = new ModelAndView("school_desc");
-    mv.addObject("school",restTemplate.getForObject("http://localhost:9090/school_desc_l/"+scid, School.class));
+    mv.addObject("school",restTemplate.getForObject(url+"/school_desc_l/"+scid, School.class));
     return mv;
   }
 
@@ -54,7 +58,7 @@ public class SchoolController {
   public ModelAndView getSchoolByName(HttpServletRequest request){
     String schoolname = request.getParameter("schoolname");
     ModelAndView mv = new ModelAndView("school");
-    mv.addObject("schools",restTemplate.getForObject("http://localhost:9090/schoolsearch?schoolname="+schoolname, PaginationDTO.class));
+    mv.addObject("schools",restTemplate.getForObject(url+"/schoolsearch?schoolname="+schoolname, PaginationDTO.class));
     return mv;
   }
 
@@ -62,9 +66,6 @@ public class SchoolController {
   @RequestMapping("/indexSearch")
   public String indexSearch(HttpServletRequest request, Model model){
     String indexSearchInput = request.getParameter("indexSearhInput");
-//    ModelAndView mv = new ModelAndView("indexSearch");
-//    mv.addObject("searchInput",indexSearchInput);
-//    return mv;
     model.addAttribute("searchInput",indexSearchInput);
     return "indexSearch";
   }
@@ -74,7 +75,7 @@ public class SchoolController {
   public ModelAndView getSchool(HttpServletRequest request){
     String indexSearchInput = request.getParameter("indexSearchInput");
     ModelAndView mv = new ModelAndView("indexSearch");
-    mv.addObject("schools",restTemplate.getForObject("http://localhost:9090/indexSearch/school?indexSearchInput="+indexSearchInput, List.class));
+    mv.addObject("schools",restTemplate.getForObject(url+"/indexSearch/school?indexSearchInput="+indexSearchInput, List.class));
     return mv;
   }
 

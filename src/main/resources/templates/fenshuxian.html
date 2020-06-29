@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分数线查询</title>
+    <meta name="viewport" content="text/html; charset=UTF-8;"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<!--    <link rel="stylesheet" href="/css/gaokao.css">-->
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        .title {
+            margin-top: 10px;
+            /*margin-left: 280px;*/
+            text-align: center;
+        }
+
+        .dropdown active {
+            background-color: #b0b0b0;
+        }
+
+
+        .ss {
+            height: 70px;
+
+        }
+
+        .cx {
+            width: 100%;
+            height: 100%;
+            float: left;
+
+        }
+
+        .cx img {
+            width: 100%;
+            margin-left: 35px;
+        }
+
+        .sr {
+            float: left;
+            /*width: 600px;*/
+            height: 30px;
+            margin-top: 3px;
+            margin-left: 30px;
+            border-radius: 0px;
+        }
+
+
+        .zd a {
+            width: 50px;
+            height: 50px;
+            background-color: #42495d;
+            color: #b0b0b0;
+            font-size: 15px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div th:insert="navigation :: nav"></div>
+
+<div class="container" style="background-color: #FFFFFF">
+
+    <div class="col-lg-10 col-md-10 col-sm-10 ">
+        <div class="cx">
+            <p style="font-size: 24px;margin-left: 30px;margin-top: 20px"><span
+                    class="glyphicon glyphicon-menu-hamburger"></span>分数线查询</p>
+            <div class="ss">
+                <div class="container">
+                    <form action="/scorelines" class="row">
+                        <input class="sr col-lg-8 col-md-8 col-sm-8 col-xs-6" name="schoolName" type="text"
+                               style="float: left;padding-left: 10px;height: 40px" required placeholder="输入学校名称">
+                        <input class="btn col-lg-1 col-md-1 col-sm-1 col-xs-1 " type="button"
+                               style="float: left;background-color: #cccccc;width:80px;margin: 2px 5px;height: 40px" onclick="next()"
+                               value="省控线">
+                        <input type="submit" style="display:block;background-color: #cccccc;width:80px;margin-top:2px;height: 40px"
+                               class="btn col-lg-1 col-md-1 col-sm-1 col-xs-1" value="搜索">
+                    </form>
+                </div>
+
+            </div>
+
+            <button value="查看示例" onclick="fn()"
+                    style="display:block;margin-left: 40px;margin-bottom:50px;background-color: white;border:1px solid ghostwhite;"
+                    id="world">查看示例
+            </button>
+
+            <img class="hide" src="//staticv3.youzy.cn/images/scorelines/exp-js-1.jpg" alt="" id="img"/>
+            <img class="hide" src="//staticv3.youzy.cn/images/scorelines/exp-js-2.jpg" alt="" id="img1"/>
+            <img class="hide" src="//staticv3.youzy.cn/images/scorelines/exp-js-3.jpg" alt="" id="img2"/>
+
+            <!--   院校分数线展示     -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                <table class="table table-hover" id="tab">
+
+                    <tr th:if="${scorelines} !=null">
+                        <th>学校</th>
+                        <th>年份</th>
+                        <th>招生批次</th>
+                        <th>最低分</th>
+                        <th>最低排名</th>
+                    </tr>
+
+                    <tbody>
+                    <tr th:each="score:${scorelines}">
+                        <td th:text="${score.name}"></td>
+                        <td th:text="${score.year}"></td>
+                        <td th:if="(${score.sort}==1 and ${score.batch}==1)" th:text="'理科 本一批'"></td>
+                        <td th:if="(${score.sort}==2 and ${score.batch}==1)" th:text="'文科 本一批'"></td>
+                        <td th:if="(${score.sort}==1 and ${score.batch}==2)" th:text="'理科 本二批'"></td>
+                        <td th:if="(${score.sort}==2 and ${score.batch}==2)" th:text="'文科 本二批'"></td>
+                        <td th:text="${score.minScore}"></td>
+                        <td th:text="${score.minRank}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!--   历年招生信息    -->
+            <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12  col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                <table class="table table-hover" >
+
+                    <tr th:if="${proAndCalData} !=null">
+                        <th>招生专业</th>
+                        <th>招生省份</th>
+                        <th>年份</th>
+                        <th>招生批次</th>
+                        <th>最低分</th>
+                        <th>最低排名</th>
+                    </tr>
+
+                    <tbody>
+                    <tr th:each="pro:${proAndCalData}">
+                        <td th:text="${pro.spname}"></td>
+                        <td th:text="${pro.local_province_name}"></td>
+                        <td th:text="${pro.year}"></td>
+                        <td th:if="(${pro.local_type_name}==1 and ${pro.local_batch_name}=='本科一批')" th:text="'理科 本一批'"></td>
+                        <td th:if="(${pro.local_type_name}==2 and ${pro.local_batch_name}=='本科一批')" th:text="'文科 本一批'"></td>
+                        <td th:if="(${pro.local_type_name}==1 and ${pro.local_batch_name}=='本科二批')" th:text="'理科 本二批'"></td>
+                        <td th:if="(${pro.local_type_name}==2 and ${pro.local_batch_name}=='本科二批')" th:text="'文科 本二批'"></td>
+                        <td th:text="${pro.min}"></td>
+                        <td th:text="${pro.min_section}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script>
+    function fn() {
+        var img = document.getElementById("img");
+        var img1 = document.getElementById("img1");
+        var img2 = document.getElementById("img2");
+        if (document.getElementById("world").innerHTML == "查看示例") {
+            img.className = "";
+            img1.className = "";
+            img2.className = "";
+            document.getElementById("world").innerHTML = "隐藏示例";
+        } else {
+            img.className = "hide";
+            img1.className = "hide";
+            img2.className = "hide";
+
+            document.getElementById("world").innerHTML = "查看示例";
+        }
+    }
+</script>
+<script>
+
+
+    function next() {
+        window.location.href = '/picixian';
+    }
+
+</script>
+</body>
+</html>
