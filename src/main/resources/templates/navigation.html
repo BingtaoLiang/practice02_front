@@ -20,28 +20,31 @@
         <div class="container">
             <ul class="nav navbar-nav">
                 <li><a href="/">志愿填报专家<span class="sr-only"></span></a></li>
-                <li class="dropdown">
-                    <a href="/xingaokao" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">新高考<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/school2profession">根据大学选专业</a></li>
+                <li><a href="/weici" style="color: #777777;text-align: center">位次查询</a></li>
+                <li><a href="/fenshuxian" style="color: #777777;text-align: center">分数线</a></li>
+                <li><a href="/picixian" style="color: #777777;text-align: center">批次线</a></li>
+<!--                <li class="dropdown">-->
+<!--                    <a href="/xingaokao" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+<!--                       aria-haspopup="true" aria-expanded="false">新高考<span class="caret"></span>-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a href="/school2profession">根据大学选专业</a></li>-->
 
-                        <li><a href="/profession2school">根据专业选科目</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">智能填报<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/majors/Homepage" style="color: #333333;text-align: center">查专业</a></li>
-                        <li><a href="/schoolHomepage" style="color: #333333;text-align: center">找大学</a></li>
-                        <li><a href="/weici" style="color: #333333;text-align: center">位次查询</a></li>
-                        <li><a href="/fenshuxian" style="color: #333333;text-align: center">分数线</a></li>
-                        <li><a href="/picixian" style="color: #333333;text-align: center">批次线</a></li>
-                    </ul>
-                </li>
+<!--                        <li><a href="/profession2school">根据专业选科目</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                <li class="dropdown">-->
+<!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+<!--                       aria-haspopup="true" aria-expanded="false">智能填报<span class="caret"></span>-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a href="/majors/Homepage" style="color: #333333;text-align: center">查专业</a></li>-->
+<!--                        <li><a href="/schoolHomepage" style="color: #333333;text-align: center">找大学</a></li>-->
+<!--                        <li><a href="/weici" style="color: #333333;text-align: center">位次查询</a></li>-->
+<!--                        <li><a href="/fenshuxian" style="color: #333333;text-align: center">分数线</a></li>-->
+<!--                        <li><a href="/picixian" style="color: #333333;text-align: center">批次线</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
                 <li th:if="${session.user != null}" class="dropdown">
                     <a href="#" class="dropdown-toggle text-position" data-toggle="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">
@@ -53,7 +56,7 @@
                     </ul>
                 </li>
 
-                <li th:if="${session.user == null}" style="margin-top: 15px;margin-left: 15px">
+                <li th:if="${session.user == null}" style="margin-top: 13px;margin-left: 15px">
                         <span>
                          <a href="/register" style="color: #777">注册 |</a>
                          <a href="/denglu" style="color: #777"> 登录</a>
